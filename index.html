@@ -27,10 +27,18 @@
         <!-- Page content-->
         <div class="container">
             <div class="text-center mt-5">
-                <h1> <a href = "my-project\img\img.jpg" download="img.jpg" target="_blank">DOWNLOAD IMAGE </a></h1>
-            </div>
+                    <input type="file" id="fileid" name="filename" >
+                        <script>
+                            document.getElementById('buttonid').addEventListener('click', openDialog);
+                            function openDialog() {
+                                document.getElementById('fileid').click();
+                            }
+                        </script>
+              </div>
         </div>
         <!-- Bootstrap core JS-->
+        <!--Todo meu embasamento pro layout da pagina simples que fiz, foi daqui-->
+        <!--Dedicado: https://startbootstrap.com/templates-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
