@@ -27,20 +27,21 @@
         <!-- Page content-->
         <div class="container">
             <div class="text-center mt-5">
-                    <input type="file" id="fileid" name="filename" >
-                        <script>
-                            document.getElementById('buttonid').addEventListener('click', openDialog);
-                            function openDialog() {
-                                document.getElementById('fileid').click();
-                            }
-                        </script>
-              </div>
+                    <input type="file" id="fileid"  name="filename" accept=".jpg, .jpeg, .png"> 
+            </div>
+            <div id="imgUploaded">
+                <img id="preview" src="#" alt="uploadedIm" >
+                 <canvas id="overlay"></canvas>
+            </div>  
         </div>
+        <div id="result"></div>
         <!-- Bootstrap core JS-->
         <!--Todo meu embasamento pro layout da pagina simples que fiz, foi daqui-->
         <!--Dedicado: https://startbootstrap.com/templates-->
+        <script defer src="./node_modules/face-api.js/dist/face-api.js"></script>
+       
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script defer src="js/scripts.js" ></script>
     </body>
 </html>
