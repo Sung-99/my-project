@@ -21,35 +21,35 @@ document.getElementById('fileid').addEventListener('change', async (event) => {
     const file = event.target.files[0];
     const img = document.getElementById('preview');
     const overlay = document.getElementById('overlay');
-  
-    if (file) {
+
+   if (file) {
         img.src = URL.createObjectURL(file);
-         
-        var reader = new FileReader();
-       
         img.onload = async () => {
-           
-        
-            var ctx = overlay.getContext('2d');
-            overlay.width = img.width;
-            overlay.height = img.height;
-            ctx.drawImage(img, 0, 0);
-               
-
-
             // Load models
             await models();
 
-            // Detect faces
-            let fullFaceDescriptions = await faceapi.detectAllFaces(file).withFaceLandmarks().withFaceDescriptors()
-            fullFaceDescriptions = faceapi.resizeResults(fullFaceDescriptions)      
-            // Set canvas size
-            overlay.width = img.width;
-            overlay.height = img.height;
-           
+            // Detect faces using the img element
+            const fullFaceDescriptions = await faceapi.detectAllFaces(img, new faceapi.SsdMobilenetv1Options()).withFaceLandmarks().withFaceDescriptors();
 
-            // Draw detections
-           faceapi.draw.drawDetections(overlay, fullFaceDescriptions)
+            // Check if any faces were detected
+            if (fullFaceDescriptions.length > 0) {
+                // Set canvas size
+                overlay.width = img.width;
+                overlay.height = img.height;
+
+                // Clear previous drawings
+                const ctx = overlay.getContext('2d');
+                ctx.clearRect(0, 0, overlay.width, overlay.height);
+                const resizedDetections = faceapi.resizeResults(fullFaceDescriptions, {
+                width: img.width,
+                height: img.height
+            });
+
+                // Draw detections
+                faceapi.draw.drawDetections(overlay, resizedDetections);
+            } else {
+                console.log('No faces detected.');
+            }
         };
     }
 });
