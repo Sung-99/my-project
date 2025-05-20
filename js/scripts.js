@@ -21,7 +21,9 @@ document.getElementById('fileid').addEventListener('change', async (event) => {
     const file = event.target.files[0];
     const img = document.getElementById('preview');
     const overlay = document.getElementById('overlay');
-
+    
+    document.getElementById('preview').classList.toggle('canvas-drawned-class');
+    
    if (file) {
         img.src = URL.createObjectURL(file);
         img.onload = async () => {
