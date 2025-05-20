@@ -14,6 +14,8 @@
       await faceapi.loadFaceLandmarkModel(MODEL_URL);
       await faceapi.loadFaceRecognitionModel(MODEL_URL);         
 }
+const REAL_FACE_WIDTH = 15; // Real width of a human face in cm
+const FOCAL_LENGTH = 500; // Focal length in pixels, adjust based on your camera
 
 
 
@@ -48,7 +50,19 @@ document.getElementById('fileid').addEventListener('change', async (event) => {
             });
 
                 // Draw detections
-                faceapi.draw.drawDetections(overlay, resizedDetections);
+                 resizedDetections.forEach(detection => {
+                    const { width } = detection.detection.box;
+
+                    // Calculate distance
+                    const distance = (REAL_FACE_WIDTH * FOCAL_LENGTH) / width;
+
+                    // Draw bounding box
+                    faceapi.draw.drawDetections(overlay, [detection]);
+
+                    // Draw distance text
+                    ctx.fillStyle = "red";
+                    ctx.fillText(`Distance: ${distance.toFixed(2)} cm`, detection.detection.box.x, detection.detection.box.y - 12);
+                });
             } else {
                 console.log('No faces detected.');
             }
